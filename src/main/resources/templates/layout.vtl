@@ -9,7 +9,20 @@
   </head>
   <body>
     <!-- begin inner template-->
-    <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/admin">Administrator</a></li>
+          <li><a href="/directors">Browse Directors</a></li>
+          <li><a href="/movies">Browse Movies</a></li>
+          <li><a href="/search">Search</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid">
       #parse( $template )
     </div>
     <!-- end inner template-->

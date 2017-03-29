@@ -118,4 +118,18 @@ public class MovieTest {
     assertEquals(95.3f, testMovie.getMovieRating(), 0.1);
   }
 
+  @Test
+  public void getTopMovies_returnsHighestRatedMovies_list() {
+    Movie testMovie1 = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie1.save();
+    Movie testMovie2 = new Movie("Fantasic Mr.Fox", 1, "A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", "Western", "2010-12-22");
+    testMovie2.save();
+    Review testReview1 = new Review(testMovie1.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    assertTrue(Movie.getTopMovies().get(0).equals(testMovie2));
+    assertTrue(Movie.getTopMovies().get(1).equals(testMovie1));
+  }
+
 }

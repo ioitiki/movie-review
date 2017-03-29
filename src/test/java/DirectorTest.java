@@ -108,4 +108,22 @@ public class DirectorTest {
     assertEquals(94.0f, testDirector.getDirectorRating(), 0.1);
   }
 
+  @Test
+  public void getTopDirectors_returnsHighestRatedDirectors_list() {
+    Director testDirector1 = new Director("Coen Brothers");
+    testDirector1.save();
+    Director testDirector2 = new Director("Wes Anderson");
+    testDirector2.save();
+    Movie testMovie1 = new Movie("Fargo", testDirector1.getId(), "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie1.save();
+    Movie testMovie2 = new Movie("Fantasic Mr.Fox", testDirector2.getId(), "A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", "Western", "2010-12-22");
+    testMovie2.save();
+    Review testReview1 = new Review(testMovie1.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    assertTrue(Director.getTopDirectors().get(0).equals(testDirector2));
+    assertTrue(Director.getTopDirectors().get(1).equals(testDirector1));
+  }
+
 }

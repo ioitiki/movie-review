@@ -82,4 +82,12 @@ public class Director {
     }
   }
 
+  public static List<Director> getTopDirectors() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM directors AS a ORDER BY (SELECT AVG(rating) FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = a.id)) desc;";
+      return con.createQuery(sql)
+        .executeAndFetch(Director.class);
+    }
+  }
+
 }
