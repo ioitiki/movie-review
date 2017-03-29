@@ -6,8 +6,12 @@
 </div>
 <div class="row">
   <div class="col-md-2 col-md-offset-2">
-    #set($String = "abc")
-    <h4><span class="glyphicon glyphicon-star"></span> $String.format("%.1f", $movie.getMovieRating())/10</h4>
+    #if($movie.getMovieRating())
+      #set($String = "abc")
+      <h4><span class="glyphicon glyphicon-star"></span> $String.format("%.1f", $movie.getMovieRating())/10</h4>
+    #else
+      <h4><span class="glyphicon glyphicon-star"></span> No Rating</h4>
+    #end
   </div>
   <div class="col-md-2">
     <h4>$movie.getGenre()</h4>
@@ -48,16 +52,20 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <h2 class="center-text">User Reviews</h2>
-    #foreach($review in $movie.getReviews())
-      <div class="well">
-        <p>$review.getRating()
-          #foreach($i in [1..$review.getRating()])
-            <span class="glyphicon glyphicon-star"></span>
-          #end
-        </p>
-        <hr>
-        <p>$review.getReview()</p>
-      </div>
+    #if($movie.getReviews().size() > 0)
+      #foreach($review in $movie.getReviews())
+        <div class="well">
+          <p>$review.getRating()
+            #foreach($i in [1..$review.getRating()])
+              <span class="glyphicon glyphicon-star"></span>
+            #end
+          </p>
+          <hr>
+          <p>$review.getReview()</p>
+        </div>
+      #end
+    #else
+      <h3>Be the first to review this movie.</h3>
     #end
   </div>
 </div>
