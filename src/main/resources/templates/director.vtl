@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>$director.getName()</h2>
+    <ul>
+      #foreach($movie in $director.getMovies())
+        <li><a href="/directors/$director.getId()/movies/$movie.getId()">$movie.getTitle()</a></li>
+      #end
+    </ul>
+  </div>
+
+  <!-- Add top reviews for director -->
+</div>

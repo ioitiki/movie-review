@@ -1,36 +1,57 @@
 <!--admin.vtl-->
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <form action="/directors" method="post">
-      <label for="name">Enter Director Name:</label>
-      <input class="form-control" type="text" name="name" id="name" required>
-      <button type="submit" class="btn btn-primary">Add Director</button>
-    </form>
+    <h1 class="center-text">Administrator Page</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Add a Director</h2>
+    <div class="well">
+      <form action="/directors" method="post">
+        <label for="name">Enter Director Name:</label>
+        <input class="form-control" type="text" name="name" id="name" required>
+        <button type="submit" class="btn btn-primary">Add Director</button>
+      </form>
+    </div>
   </div>
 </div>
 <br>
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <form action="/movies" method="post">
-      <label for="title">Enter Movie Title:</label>
-      <input class="form-control" type="text" name="title" id="title" required>
-      <label for="directoId">Select Director:</label>
-      <select class="form-control" name="directorId">
-        #foreach($director in $directors)
-        <option value="$director.getId()">$director.getName()</option>
-        #end
-      </select>
-      <label for="description">Enter Description:</label>
-      <textarea class="form-control" name="description" rows="8" cols="40" required></textarea>
-      <label for="genre">Enter Genre:</label>
-      <input class="form-control" type="text" name="genre" id="genre" required>
-      <label for="releaseDate">Enter Release Date:</label>
-      <input class="form-control" type="date" name="releaseDate" id="releaseDate" required>
-      <button type="submit" class="btn btn-primary">Add Movie</button>
-    </form>
-
+    <h2>Add a Movie</h2>
+    <div class="well">
+      <form action="/movies" method="post">
+        <div class="form-group">
+          <label for="title">Enter Movie Title:</label>
+          <input class="form-control" type="text" name="title" id="title" required>
+        </div>
+        <div class="form-group">
+          <label for="directoId">Select Director:</label>
+          <select class="form-control" name="directorId">
+            #foreach($director in $directors)
+            <option value="$director.getId()">$director.getName()</option>
+            #end
+          </select>
+        </div>
+        <div class="form-inline">
+          <div class="form-group">
+            <label for="genre">Enter Genre:</label>
+            <input class="form-control" type="text" name="genre" id="genre" required>
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Enter Release Date:</label>
+            <input class="form-control" type="date" name="releaseDate" id="releaseDate" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Enter Description:</label>
+          <textarea class="form-control" name="description" rows="8" cols="40" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Movie</button>
+      </form>
+    </div>
   </div>
-
 </div>
 
 <!--admin.vtl-->

@@ -46,5 +46,36 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/directors/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Director director = Director.find(Integer.parseInt(request.params(":id")));
+      model.put("director", director);
+      model.put("template", "templates/director.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/directors/:id/movies/:movieId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Director director = Director.find(Integer.parseInt(request.params(":id")));
+      Movie movie = Movie.find(Integer.parseInt(request.params(":movieId")));
+      model.put("movie", movie);
+      model.put("director", director);
+      model.put("template", "templates/movie.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/directors/:id/movies/:movieId/reviews/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int rating = Integer.parseInt(request.queryParams("rating"));
+      String review = request.queryParams("review");
+      int directorId = Integer.parseInt(request.params(":id"));
+      int movieId = Integer.parseInt(request.params(":movieId"));
+      Review newReview = new Review(movieId, rating, review);
+      newReview.save();
+      String url = String.format("/directors/%d/movies/%d", directorId, movieId);
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
   }
 }

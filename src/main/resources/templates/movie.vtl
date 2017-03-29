@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>$movie.getTitle()</h1>
+    <h3>$director.getName()</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2 col-md-offset-2">
+    <h4><span class="glyphicon glyphicon-star"></span> $movie.getMovieRating()/10</h4>
+  </div>
+  <div class="col-md-2">
+    <h4>$movie.getGenre()</h4>
+  </div>
+  <div class="col-md-3">
+    <h4>$movie.getReleaseDate()</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h4>Description:</h4>
+    <div class="well">
+      <p>$movie.getDescription()</p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <hr>
+  <div class="col-md-8 col-md-offset-2">
+    <h2 class="center-text">Add a Review</h2>
+    <form action="/directors/$director.getId()/movies/$movie.getId()/reviews/new" method="post">
+      <div class="form-group">
+        <label for="rating">Rate this Movie</label>
+        <br>
+        <select class="selectpicker" name="rating" required>
+          #foreach($i in [1..10])
+            <option data-icon="glyphicon glyphicon-star" value="$i">$i</option>
+          #end
+        </select>
+      </div>
+
+      <label for="review">Review this Movie</label>
+      <textarea class="form-control" name="review" rows="8" cols="40" required></textarea>
+      <button type="submit" class="btn btn-primary">Review</button>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2 class="center-text">User Reviews</h2>
+    #foreach($review in $movie.getReviews())
+      <div class="well">
+        <p>$review.getRating()
+          #foreach($i in [1..$review.getRating()])
+            <span class="glyphicon glyphicon-star"></span>
+          #end
+        </p>
+        <hr>
+        <p>$review.getReview()</p>
+      </div>
+    #end
+  </div>
+</div>
