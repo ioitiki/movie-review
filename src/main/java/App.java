@@ -24,6 +24,20 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/directors", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("directors", Director.getTopDirectors());
+      model.put("template", "templates/directors.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/movies", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("movies", Movie.getTopMovies());
+      model.put("template", "templates/movies.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     post("/directors", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String name = request.queryParams("name");

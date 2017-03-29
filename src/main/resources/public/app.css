@@ -26,3 +26,7 @@ button {
 .form-inline input {
   margin-right: 10px;
 }
+
+.list-item {
+  font-size: 18px;
+}

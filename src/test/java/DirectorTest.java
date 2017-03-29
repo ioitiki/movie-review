@@ -122,8 +122,8 @@ public class DirectorTest {
     testReview1.save();
     Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
     testReview2.save();
-    assertTrue(Director.getTopDirectors().get(0).equals(testDirector2));
-    assertTrue(Director.getTopDirectors().get(1).equals(testDirector1));
+    assertTrue(Director.getTopDirectors().get(1).equals(testDirector2));
+    assertTrue(Director.getTopDirectors().get(0).equals(testDirector1));
   }
 
 }

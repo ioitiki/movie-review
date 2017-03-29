@@ -11,7 +11,7 @@
       #end
       <ul>
       #foreach($i in [0..$end])
-        <li><a href="/directors/$topMovies.get($i).getDirectorId()/movies/$topMovies.get($i).getId()">$topMovies.get($i).getTitle()</a></li>
+        <li class="list-item"><a href="/directors/$topMovies.get($i).getDirectorId()/movies/$topMovies.get($i).getId()">$topMovies.get($i).getTitle()</a></li>
       #end
       </ul>
     #end
@@ -30,7 +30,7 @@
       #end
       <ul>
         #foreach($i in [0..$end])
-          <li><a href="/directors/$topDirectors.get($i).getId()">$topDirectors.get($i).getName()</a></li>
+          <li class="list-item"><a href="/directors/$topDirectors.get($i).getId()">$topDirectors.get($i).getName()</a></li>
         #end
       </ul>
     #end

@@ -77,4 +77,13 @@ public class ReviewTest {
     assertEquals(testReview, Review.find(testReview.getId()));
   }
 
+  @Test
+  public void getMovieTitle_returnsCorrectMovieName_fargo() {
+    Movie testMovie = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie.save();
+    Review testReview = new Review(testMovie.getId(), 89, "Good Movie");
+    testReview.save();
+    assertEquals(testMovie.getTitle(), testReview.getMovieTitle());
+  }
+
 }

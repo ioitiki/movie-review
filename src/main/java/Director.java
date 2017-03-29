@@ -66,7 +66,7 @@ public class Director {
 
   public List<Review> getDirectorReviews() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = :directorId);";
+      String sql = "SELECT * FROM reviews AS a WHERE movieId IN (SELECT id FROM movies WHERE directorId = :directorId) ORDER By a.rating desc;";
       return con.createQuery(sql)
         .addParameter("directorId", this.id)
         .executeAndFetch(Review.class);
@@ -84,7 +84,7 @@ public class Director {
 
   public static List<Director> getTopDirectors() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM directors AS a ORDER BY (SELECT AVG(rating) FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = a.id)) desc;";
+      String sql = "SELECT * FROM directors AS a ORDER BY (SELECT AVG(rating) FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = a.id)) asc;";
       return con.createQuery(sql)
         .executeAndFetch(Director.class);
     }

@@ -71,4 +71,8 @@ public class Review {
     }
   }
 
+  public String getMovieTitle() {
+    return Movie.find(this.movieId).getTitle();
+  }
+
 }

@@ -128,8 +128,8 @@ public class MovieTest {
     testReview1.save();
     Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
     testReview2.save();
-    assertTrue(Movie.getTopMovies().get(0).equals(testMovie2));
-    assertTrue(Movie.getTopMovies().get(1).equals(testMovie1));
+    assertTrue(Movie.getTopMovies().get(1).equals(testMovie2));
+    assertTrue(Movie.getTopMovies().get(0).equals(testMovie1));
   }
 
 }

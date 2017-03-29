@@ -1,12 +1,50 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h2>$director.getName()</h2>
-    <ul>
-      #foreach($movie in $director.getMovies())
-        <li><a href="/directors/$director.getId()/movies/$movie.getId()">$movie.getTitle()</a></li>
-      #end
-    </ul>
+    <h1>$director.getName()</h1>
+    #if($director.getDirectorRating())
+      #set($String = "abc")
+      <h4><span class="glyphicon glyphicon-star"></span> $String.format("%.1f", $director.getDirectorRating())/10</h4>
+    #else
+      <h4><span class="glyphicon glyphicon-star"></span> No Ratings</h4>
+    #end
+    <!-- <h4><span class="glyphicon glyphicon-star"></span> $director.getDirectorRating()/10</h4> -->
+
+    <h3>Filmography:</h3>
+    #if($director.getMovies().size() > 0)
+      <ul>
+        #foreach($movie in $director.getMovies())
+          <li class="list-item"><a href="/directors/$director.getId()/movies/$movie.getId()">$movie.getTitle()</a></li>
+        #end
+      </ul>
+    #else
+      <h4>No movies added.</h4>
+    #end
   </div>
 
   <!-- Add top reviews for director -->
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Top Reviews</h3>
+    #if($director.getDirectorReviews().size() > 0)
+      #if($director.getDirectorReviews().size() < 4)
+        #set($end = $director.getDirectorReviews().size())
+        #set($end = $end - 1)
+      #else
+        #set($end = 4)
+      #end
+      #foreach($i in [0..$end])
+      <div class="well">
+        <h4>$director.getDirectorReviews().get($i).getMovieTitle()</h4>
+        <p>$director.getDirectorReviews().get($i).getRating()
+          #foreach($i in [1..$director.getDirectorReviews().get($i).getRating()])
+            <span class="glyphicon glyphicon-star"></span>
+          #end
+        </p>
+        <hr>
+        <p>$director.getDirectorReviews().get($i).getReview()</p>
+      </div>
+      #end
+    #end
+  </div>
 </div>

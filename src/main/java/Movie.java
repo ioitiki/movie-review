@@ -110,7 +110,7 @@ public class Movie {
 
   public static List<Movie> getTopMovies() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM movies AS a ORDER BY (SELECT AVG(rating) FROM reviews WHERE movieId = a.id) desc;";
+      String sql = "SELECT * FROM movies AS a ORDER BY (SELECT AVG(rating) FROM reviews WHERE movieId = a.id) asc;";
       return con.createQuery(sql)
         .executeAndFetch(Movie.class);
     }
