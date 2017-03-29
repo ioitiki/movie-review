@@ -105,4 +105,17 @@ public class MovieTest {
     assertTrue(testMovie.getReviews().containsAll(Arrays.asList(reviews)));
   }
 
+  @Test
+  public void getMovieRating_returnsAverageRatingForGivenMovie_float() {
+    Movie testMovie = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie.save();
+    Review testReview1 = new Review(testMovie.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    Review testReview3 = new Review(testMovie.getId(), 98, "Really Good Movie");
+    testReview3.save();
+    assertEquals(95.3f, testMovie.getMovieRating(), 0.1);
+  }
+
 }

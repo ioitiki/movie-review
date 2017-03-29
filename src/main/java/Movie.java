@@ -99,4 +99,13 @@ public class Movie {
     }
   }
 
+  public Float getMovieRating() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT AVG(rating) FROM reviews WHERE movieId = :movieId;";
+      return con.createQuery(sql)
+        .addParameter("movieId", this.id)
+        .executeScalar(Float.class);
+    }
+  }
+
 }

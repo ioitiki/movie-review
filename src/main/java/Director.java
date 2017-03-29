@@ -73,4 +73,13 @@ public class Director {
     }
   }
 
+  public Float getDirectorRating() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT AVG(rating) FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = :directorId);";
+      return con.createQuery(sql)
+        .addParameter("directorId", this.id)
+        .executeScalar(Float.class);
+    }
+  }
+
 }

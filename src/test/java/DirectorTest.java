@@ -93,4 +93,19 @@ public class DirectorTest {
     assertTrue(testDirector.getDirectorReviews().containsAll(Arrays.asList(reviews)));
   }
 
+  @Test
+  public void getDirectorRating_returnsAverageRatingForGivenDirector_float() {
+    Director testDirector = new Director("Coen Brothers");
+    testDirector.save();
+    Movie testMovie1 = new Movie("Fargo", testDirector.getId(), "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie1.save();
+    Movie testMovie2 = new Movie("True Grit", testDirector.getId(), "A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", "Western", "2010-12-22");
+    testMovie2.save();
+    Review testReview1 = new Review(testMovie1.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    assertEquals(94.0f, testDirector.getDirectorRating(), 0.1);
+  }
+
 }
