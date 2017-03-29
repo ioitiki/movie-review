@@ -1,0 +1,36 @@
+<!--admin.vtl-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <form action="/directors" method="post">
+      <label for="name">Enter Director Name:</label>
+      <input class="form-control" type="text" name="name" id="name" required>
+      <button type="submit" class="btn btn-primary">Add Director</button>
+    </form>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <form action="/movies" method="post">
+      <label for="title">Enter Movie Title:</label>
+      <input class="form-control" type="text" name="title" id="title" required>
+      <label for="directoId">Select Director:</label>
+      <select class="form-control" name="directorId">
+        #foreach($director in $directors)
+        <option value="$director.getId()">$director.getName()</option>
+        #end
+      </select>
+      <label for="description">Enter Description:</label>
+      <textarea class="form-control" name="description" rows="8" cols="40" required></textarea>
+      <label for="genre">Enter Genre:</label>
+      <input class="form-control" type="text" name="genre" id="genre" required>
+      <label for="releaseDate">Enter Release Date:</label>
+      <input class="form-control" type="date" name="releaseDate" id="releaseDate" required>
+      <button type="submit" class="btn btn-primary">Add Movie</button>
+    </form>
+
+  </div>
+
+</div>
+
+<!--admin.vtl-->
