@@ -8,7 +8,7 @@
     <div class="table-list well">
       <h2>Top Rated Movies</h2>
       #if($topMovies.size() > 0)
-        #if($topMovies.size() < 4)
+        #if($topMovies.size() < 5)
           #set($end = $topMovies.size())
           #set($end = $end - 1)
         #else
@@ -26,7 +26,7 @@
     <div class="table-list well">
       <h2>Top Rated Directors</h2>
       #if($topDirectors.size() > 0)
-        #if($topDirectors.size() < 4)
+        #if($topDirectors.size() < 5)
           #set($end = $topDirectors.size())
           #set($end = $end - 1)
         #else

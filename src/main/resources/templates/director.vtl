@@ -13,13 +13,17 @@
     <h4>$director.getDirectorReviewCount() Reviews</h4>
     <h3>Filmography:</h3>
     #if($director.getMovies().size() > 0)
-      <ul>
-        #foreach($movie in $director.getMovies())
-          <li class="list-item"><a href="/directors/$director.getId()/movies/$movie.getId()">$movie.getTitle()</a></li>
-        #end
-      </ul>
+      <div class="well">
+        <ul>
+          #foreach($movie in $director.getMovies())
+            <li class="list-item"><a href="/directors/$director.getId()/movies/$movie.getId()">$movie.getTitle()</a></li>
+          #end
+        </ul>
+      </div>
     #else
-      <h4>No movies added.</h4>
+      <div class="well">
+        <h4>No movies added.</h4>
+      </div>
     #end
   </div>
 </div>
@@ -49,7 +53,9 @@
         </div>
       #end
     #else
-      <h4>No reviews.</h4>
+      <div class="well">
+        <h4>No reviews.</h4>
+      </div>
     #end
   </div>
 </div>

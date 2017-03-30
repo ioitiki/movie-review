@@ -76,7 +76,7 @@ CREATE TABLE movies (
     directorid integer,
     description text,
     genre character varying,
-    releasedate timestamp without time zone
+    releasedate character varying
 );
 
 
@@ -164,12 +164,15 @@ ALTER TABLE ONLY reviews ALTER COLUMN id SET DEFAULT nextval('reviews_id_seq'::r
 --
 
 COPY directors (id, name) FROM stdin;
-1	Coen Brothers
 2	Wes Anderson
-3	JJ Abrams
-4	PT Anderson
 5	Quinten Tarentino
-6	Ben Afflec
+6	Ben Affleck
+7	Coen Brothers
+8	JJ Abrams
+9	Sofia Coppola
+10	Spike Jonze
+11	Alejandro González Iñárritu
+12	Morten Tyldum
 \.
 
 
@@ -177,7 +180,7 @@ COPY directors (id, name) FROM stdin;
 -- Name: directors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('directors_id_seq', 6, true);
+SELECT pg_catalog.setval('directors_id_seq', 12, true);
 
 
 --
@@ -185,7 +188,17 @@ SELECT pg_catalog.setval('directors_id_seq', 6, true);
 --
 
 COPY movies (id, title, directorid, description, genre, releasedate) FROM stdin;
-1	Fargo	1	Jerry works in his father-in-law's car dealership	Crime	1996-03-29 00:00:00
+4	Fargo	7	Jerry works in his father-in-law's car dealership and has gotten himself in financial problems. He tries various schemes to come up with money needed for a reason that is never really explained. It has to be assumed that his huge embezzlement of money from the dealership is about to be discovered by father-in-law. When all else falls through, plans he set in motion earlier for two men to kidnap his wife for ransom to be paid by her wealthy father (who doesn't seem to have the time of day for son-in-law). From the moment of the kidnapping, things go wrong and what was supposed to be a non-violent affair turns bloody with more blood added by the minute. Jerry is upset at the bloodshed, which turns loose a pregnant sheriff from Brainerd, MN who is tenacious in attempting to solve the three murders in her jurisdiction.	Crime	1996-04-05
+6	The Big Lebowski	7	"The Dude" Lebowski, mistaken for a millionaire Lebowski, seeks restitution for his ruined rug and enlists his bowling buddies to help get it.	Comedy	1998-03-06
+5	Argo	6	Acting under the cover of a Hollywood producer scouting a location for a science fiction film, a CIA agent launches a dangerous operation to rescue six Americans in Tehran during the U.S. hostage crisis in Iran in 1980.	Biography	2012-10-12
+8	Star Wars: The Force Awakens	8	Three decades after the defeat of the Galactic Empire, a new threat arises. The First Order attempts to rule the galaxy and only a ragtag group of heroes can stop them, along with the help of the Resistance.	Action	2015-12-18
+9	The Royal Tenenbaums	2	An estranged family of former child prodigies reunites when their father announces he is terminally ill.	Comedy	2002-01-04
+10	Rushmore	2	The extracurricular king of Rushmore preparatory school is put on academic probation.	Comedy	1999-02-19
+11	Lost in Translation	9	A faded movie star and a neglected young woman form an unlikely bond after crossing paths in Tokyo.	Drama	2003-10-03
+12	Her	10	A lonely writer develops an unlikely relationship with an operating system designed to meet his every need.	Drama	2014-01-10
+13	Birdman	11	Illustrated upon the progress of his latest Broadway play, a former popular actor's struggle to cope with his current life as a wasted actor is shown.	Comedy	2014-11-14
+14	The Imitation Game	12	During World War II, mathematician Alan Turing tries to crack the enigma code with help from fellow mathematicians.	Biography	2014-12-25
+15	Pulp Fiction	5	The lives of two mob hit men, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.	Crime	1994-10-14
 \.
 
 
@@ -193,7 +206,7 @@ COPY movies (id, title, directorid, description, genre, releasedate) FROM stdin;
 -- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('movies_id_seq', 1, true);
+SELECT pg_catalog.setval('movies_id_seq', 15, true);
 
 
 --
@@ -201,11 +214,25 @@ SELECT pg_catalog.setval('movies_id_seq', 1, true);
 --
 
 COPY reviews (id, movieid, rating, review) FROM stdin;
-1	1	10	Great Movie!
-2	1	8	Good Movie.
-3	1	9	After watching the first half I realized this is probably my fav movie!
-4	1	10	the BEST EVER!!!!!
-5	1	7	OK
+10	4	9	BEST MOVIE EVER
+12	4	6	wkjqwtw\r\n
+13	4	7	ok\r\n
+14	4	5	hey not good
+15	5	8	movie was great
+17	5	4	not good
+18	5	8	great
+19	6	8	good
+20	6	9	really good
+9	4	9	Best ever ever
+23	4	8	good
+25	5	4	ok
+27	6	2	really bad
+28	6	7	ok\r\n
+8	4	9	Best ever ever
+11	4	3	lkhjsfv
+30	6	10	10/10 would watch again
+26	6	10	hated it. but im an idiot so ...
+31	14	9	great movie love the math 
 \.
 
 
@@ -213,7 +240,7 @@ COPY reviews (id, movieid, rating, review) FROM stdin;
 -- Name: reviews_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('reviews_id_seq', 5, true);
+SELECT pg_catalog.setval('reviews_id_seq', 31, true);
 
 
 --
