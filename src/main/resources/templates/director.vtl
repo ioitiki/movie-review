@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <a href="/directors/$director.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Director</a>
+    #if($admin)
+      <a href="/directors/$director.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Director</a>
+    #end
     <h1>$director.getName()</h1>
     #if($director.getDirectorRating())
       #set($String = "abc")
@@ -8,8 +10,7 @@
     #else
       <h4><span class="glyphicon glyphicon-star"></span> No Ratings</h4>
     #end
-    <!-- <h4><span class="glyphicon glyphicon-star"></span> $director.getDirectorRating()/10</h4> -->
-
+    <h4>$director.getDirectorReviewCount() Reviews</h4>
     <h3>Filmography:</h3>
     #if($director.getMovies().size() > 0)
       <ul>
@@ -21,14 +22,12 @@
       <h4>No movies added.</h4>
     #end
   </div>
-
-  <!-- Add top reviews for director -->
 </div>
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <h3>Top Reviews</h3>
     #if($director.getDirectorReviews().size() > 0)
-      #if($director.getDirectorReviews().size() < 4)
+      #if($director.getDirectorReviews().size() < 5)
         #set($end = $director.getDirectorReviews().size())
         #set($end = $end - 1)
       #else

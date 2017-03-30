@@ -17,14 +17,25 @@
           <a class="navbar-brand" href="/">Home</a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="/admin">Administrator</a></li>
+          #if($admin)
+            <li><a href="/admin">Administrator</a></li>
+          #end
           <li><a href="/directors">Browse Directors</a></li>
           <li><a href="/movies">Browse Movies</a></li>
           <!-- <li><a href="/search">Search</a></li> -->
         </ul>
-        <form action="/search" class="navbar-form navbar-left" method="post">
+        #if($admin)
+        <form class="navbar-form navbar-right" action="/logout" method="post">
+          <button type="submit" class="btn search-btn btn-info">Logout</button>
+        </form>
+        #else
+          <form class="navbar-form navbar-right" action="/login" method="post">
+            <button type="submit" class="btn search-btn btn-info">Login as Admin</button>
+          </form>
+        #end
+        <form action="/search" class="navbar-form navbar-right" method="post">
           <div class="form-group">
-            <input name="searchInput"type="text" class="form-control" placeholder="Search">
+            <input name="searchInput" type="text" class="form-control" placeholder="Search">
           </div>
           <button type="submit" class="search-btn btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
         </form>

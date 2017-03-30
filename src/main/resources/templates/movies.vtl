@@ -5,6 +5,7 @@
       <tr>
         <th>Movie Name</th>
         <th>Rating</th>
+        <th>Reviews</th>
       </tr>
       #foreach($movie in $movies)
         <tr>
@@ -15,6 +16,7 @@
           #else
             <td><span class="glyphicon glyphicon-star"></span> No Ratings</td>
           #end
+          <td>$movie.getMovieReviewCount()</td>
         </tr>
       #end
     </table>

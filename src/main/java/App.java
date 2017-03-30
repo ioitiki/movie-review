@@ -11,6 +11,7 @@ public class App {
 
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
+      model.put("admin", request.session().attribute("admin"));
       model.put("topMovies", Movie.getTopMovies());
       model.put("topDirectors", Director.getTopDirectors());
       model.put("template", "templates/index.vtl");
@@ -19,6 +20,7 @@ public class App {
 
     get("/admin", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
+      model.put("admin", request.session().attribute("admin"));
       model.put("directors", Director.all());
       model.put("template", "templates/admin.vtl");
       return new ModelAndView(model, layout);
@@ -26,6 +28,7 @@ public class App {
 
     get("/directors", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
+      model.put("admin", request.session().attribute("admin"));
       model.put("directors", Director.getTopDirectors());
       model.put("template", "templates/directors.vtl");
       return new ModelAndView(model, layout);
@@ -33,6 +36,7 @@ public class App {
 
     get("/movies", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
+      model.put("admin", request.session().attribute("admin"));
       model.put("movies", Movie.getTopMovies());
       model.put("template", "templates/movies.vtl");
       return new ModelAndView(model, layout);
@@ -63,6 +67,7 @@ public class App {
     get("/directors/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Director director = Director.find(Integer.parseInt(request.params(":id")));
+      model.put("admin", request.session().attribute("admin"));
       model.put("director", director);
       model.put("template", "templates/director.vtl");
       return new ModelAndView(model, layout);
@@ -72,6 +77,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       Director director = Director.find(Integer.parseInt(request.params(":id")));
       Movie movie = Movie.find(Integer.parseInt(request.params(":movieId")));
+      model.put("admin", request.session().attribute("admin"));
       model.put("movie", movie);
       model.put("director", director);
       model.put("template", "templates/movie.vtl");
@@ -95,6 +101,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       Movie movie = Movie.find(Integer.parseInt(request.params(":movieId")));
       Review review = Review.find(Integer.parseInt(request.params(":reviewId")));
+      model.put("admin", request.session().attribute("admin"));
       model.put("movie", movie);
       model.put("review", review);
       model.put("template", "templates/review-edit-form.vtl");
@@ -128,6 +135,7 @@ public class App {
     get("/directors/:id/movies/:movieId/edit", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Movie movie = Movie.find(Integer.parseInt(request.params(":movieId")));
+      model.put("admin", request.session().attribute("admin"));
       model.put("movie", movie);
       model.put("directors", Director.all());
       model.put("template", "templates/movie-edit-form.vtl");
@@ -163,6 +171,7 @@ public class App {
     get("/directors/:id/edit", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Director director = Director.find(Integer.parseInt(request.params(":id")));
+      model.put("admin", request.session().attribute("admin"));
       model.put("director", director);
       model.put("template", "templates/director-edit-form.vtl");
       return new ModelAndView(model, layout);
@@ -185,6 +194,29 @@ public class App {
       Director director = Director.find(directorId);
       director.deleteDirector();
       response.redirect("/directors");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/search", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String searchInput = request.queryParams("searchInput");
+      model.put("movies", Movie.searchMovie(searchInput));
+      model.put("directors", Director.searchDirector(searchInput));
+      model.put("template", "templates/results.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/login", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      request.session().attribute("admin", "admin");
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/logout", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      request.session().attribute("admin", null);
+      response.redirect(request.headers("Referer"));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

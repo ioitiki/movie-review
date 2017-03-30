@@ -117,10 +117,19 @@ public class Director {
   public static List<Director> searchDirector(String input) {
     String newInput = "%" + input + "%";
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM directors WHERE lower(name) LIKE lower(:input);";
+      String sql = "SELECT * FROM directors AS a WHERE lower(name) LIKE lower(:input) ORDER BY (SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = a.id)) desc;";
       return con.createQuery(sql)
         .addParameter("input", newInput)
         .executeAndFetch(Director.class);
+    }
+  }
+
+  public Integer getDirectorReviewCount() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT COUNT(rating) FROM reviews WHERE movieId IN (SELECT id FROM movies WHERE directorId = :directorId);";
+      return con.createQuery(sql)
+        .addParameter("directorId", this.id)
+        .executeScalar(Integer.class);
     }
   }
 

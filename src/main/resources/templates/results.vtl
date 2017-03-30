@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Directors</h1>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Director Name</th>
+        <th>Rating</th>
+      </tr>
+      #if($directors.size() > 0)
+        #foreach($director in $directors)
+          <tr>
+            <td><a href="/directors/$director.getId()">$director.getName()</a></td>
+            #if($director.getDirectorRating())
+              #set($String = "abc")
+              <td><span class="glyphicon glyphicon-star"></span> $String.format("%.1f", $director.getDirectorRating())/10</td>
+            #else
+              <td><span class="glyphicon glyphicon-star"></span> No Ratings</td>
+            #end
+          </tr>
+        #end
+      #else
+        <tr>
+          <td>No directors found.</td>
+          <td>N/A</td>
+        </tr>
+      #end
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Movies</h1>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Movie Name</th>
+        <th>Rating</th>
+      </tr>
+      #if($movies.size() > 0)
+        #foreach($movie in $movies)
+          <tr>
+            <td><a href="/directors/$movie.getDirectorId()/movies/$movie.getId()">$movie.getTitle()</a></td>
+            #if($movie.getMovieRating())
+              #set($String = "abc")
+              <td><span class="glyphicon glyphicon-star"></span> $String.format("%.1f", $movie.getMovieRating())/10</td>
+            #else
+              <td><span class="glyphicon glyphicon-star"></span> No Ratings</td>
+            #end
+          </tr>
+        #end
+      #else
+        <tr>
+          <td>No movies found.</td>
+          <td>N/A</td>
+        </tr>
+      #end
+    </table>
+  </div>
+</div>

@@ -153,10 +153,19 @@ public class Movie {
   public static List<Movie> searchMovie(String input) {
     String newInput = "%" + input + "%";
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM movies WHERE lower(title) LIKE lower(:input);";
+      String sql = "SELECT * FROM movies AS a WHERE lower(title) LIKE lower(:input) ORDER BY (SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE movieId = a.id) desc;";
       return con.createQuery(sql)
         .addParameter("input", newInput)
         .executeAndFetch(Movie.class);
+    }
+  }
+
+  public Integer getMovieReviewCount() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT COUNT(rating) FROM reviews WHERE movieId = :movieId;";
+      return con.createQuery(sql)
+        .addParameter("movieId", this.id)
+        .executeScalar(Integer.class);
     }
   }
 

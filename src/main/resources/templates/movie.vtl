@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <a href="/directors/$director.getId()/movies/$movie.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Movie</a>
+    #if($admin)
+      <a href="/directors/$director.getId()/movies/$movie.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Movie</a>
+    #end
     <h1>$movie.getTitle()</h1>
-    <h3>$director.getName()</h3>
+    <h3><a href="/directors/$director.getId()">$director.getName()</a></h3>
   </div>
 </div>
 <div class="row">
@@ -15,9 +17,12 @@
     #end
   </div>
   <div class="col-md-2">
+    <h4>$movie.getMovieReviewCount() Reviews</h4>
+  </div>
+  <div class="col-md-2">
     <h4>$movie.getGenre()</h4>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <h4>$movie.getReleaseDate()</h4>
   </div>
 </div>
@@ -56,7 +61,9 @@
     #if($movie.getReviews().size() > 0)
       #foreach($review in $movie.getReviews())
         <div class="well">
-          <a href="/directors/$director.getId()/movies/$movie.getId()/reviews/$review.getId()/edit" class="review-edit btn btn-info btn-xs">Edit</a>
+          #if($admin)
+            <a href="/directors/$director.getId()/movies/$movie.getId()/reviews/$review.getId()/edit" class="review-edit btn btn-info btn-xs">Edit</a>
+          #end
           <p>$review.getRating()
             #foreach($i in [1..$review.getRating()])
               <span class="glyphicon glyphicon-star"></span>

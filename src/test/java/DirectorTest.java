@@ -169,4 +169,21 @@ public class DirectorTest {
     assertFalse(Director.searchDirector("en").contains(testDirector3));
   }
 
+  @Test
+  public void getDirectorReviewCount_returnsNumberOfReviewsForGivenDirector_3() {
+    Director testDirector = new Director("Coen Brothers");
+    testDirector.save();
+    Movie testMovie1 = new Movie("Fargo", testDirector.getId(), "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie1.save();
+    Movie testMovie2 = new Movie("True Grit", testDirector.getId(), "A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", "Western", "2010-12-22");
+    testMovie2.save();
+    Review testReview1 = new Review(testMovie1.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    Review testReview3 = new Review(testMovie2.getId(), 97, "pretty Good Movie");
+    testReview3.save();
+    assertEquals(Integer.valueOf(3), testDirector.getDirectorReviewCount());
+  }
+
 }
