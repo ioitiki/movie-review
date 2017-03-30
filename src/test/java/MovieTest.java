@@ -44,8 +44,8 @@ public class MovieTest {
   @Test
   public void getReleaseDate_returnsCorrectMovieReleaseDate_Timestamp() {
     Movie testMovie = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
-    Timestamp testTimestamp = new Timestamp(Date.valueOf("1996-04-05").getTime());
-    assertEquals(testTimestamp, testMovie.getReleaseDate());
+    // Timestamp testTimestamp = new Timestamp(Date.valueOf("1996-04-05").getTime());
+    assertEquals("1996-04-05", testMovie.getReleaseDate());
   }
 
   @Test
@@ -128,8 +128,56 @@ public class MovieTest {
     testReview1.save();
     Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
     testReview2.save();
-    assertTrue(Movie.getTopMovies().get(1).equals(testMovie2));
-    assertTrue(Movie.getTopMovies().get(0).equals(testMovie1));
+    assertTrue(Movie.getTopMovies().get(0).equals(testMovie2));
+    assertTrue(Movie.getTopMovies().get(1).equals(testMovie1));
+  }
+
+  @Test
+  public void updateMovie_updatesMovieProperties_true() {
+    Movie testMovie = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie.save();
+    testMovie.updateMovie("Fantasic Mr.Fox", 2, "A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", "Western", "2010-12-22");
+    // Timestamp testTimestamp = new Timestamp(Date.valueOf("2010-12-22").getTime());
+    assertEquals("Fantasic Mr.Fox", Movie.find(testMovie.getId()).getTitle());
+    assertEquals("Fantasic Mr.Fox", testMovie.getTitle());
+    assertEquals(2, Movie.find(testMovie.getId()).getDirectorId());
+    assertEquals(2, testMovie.getDirectorId());
+    assertEquals("A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", Movie.find(testMovie.getId()).getDescription());
+    assertEquals("A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", testMovie.getDescription());
+    assertEquals("Western", Movie.find(testMovie.getId()).getGenre());
+    assertEquals("Western", testMovie.getGenre());
+    assertEquals("2010-12-22", Movie.find(testMovie.getId()).getReleaseDate());
+    assertEquals("2010-12-22", testMovie.getReleaseDate());
+  }
+
+  @Test
+  public void deleteMovie_deletesMovieFromDB_true() {
+    Movie testMovie = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie.save();
+    Review testReview1 = new Review(testMovie.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    int testMovieId = testMovie.getId();
+    int testReview1Id = testReview1.getId();
+    int testReview2Id = testReview2.getId();
+    testMovie.deleteMovie();
+    assertEquals(null, Movie.find(testMovieId));
+    assertEquals(null, Review.find(testReview1Id));
+    assertEquals(null, Review.find(testReview2Id));
+  }
+
+  @Test
+  public void searchMovie_returnsAllMoviesWithMatchingString_List() {
+    Movie testMovie1 = new Movie("Fargo", 1, "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie1.save();
+    Movie testMovie2 = new Movie("Fantasic Mr.Fox", 1, "A tough U.S. Marshal helps a stubborn teenager track down her father's murderer.", "Western", "2010-12-22");
+    testMovie2.save();
+    Movie testMovie3 = new Movie("The Big Lebowski", 1, "The Dude Lebowski, mistaken for a millionaire Lebowski, seeks restitution for his ruined rug and enlists his bowling buddies to help get it.", "Comedy", "1998-03-06");
+    testMovie3.save();
+    Movie[] movies = new Movie[] {testMovie1, testMovie2};
+    assertTrue(Movie.searchMovie("fa").containsAll(Arrays.asList(movies)));
+    assertFalse(Movie.searchMovie("fa").contains(testMovie3));
   }
 
 }

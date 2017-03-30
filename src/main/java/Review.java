@@ -75,4 +75,26 @@ public class Review {
     return Movie.find(this.movieId).getTitle();
   }
 
+  public void updateReview(int rating, String review) {
+    this.rating = rating;
+    this.review = review;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE reviews SET (rating, review) = (:rating, :review) WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("rating", this.rating)
+        .addParameter("review", this.review)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void deleteReview() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM reviews WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
 }

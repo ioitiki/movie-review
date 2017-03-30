@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
+    <a href="/directors/$director.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Director</a>
     <h1>$director.getName()</h1>
     #if($director.getDirectorRating())
       #set($String = "abc")
@@ -45,6 +46,8 @@
         <p>$director.getDirectorReviews().get($i).getReview()</p>
       </div>
       #end
+    #else
+      <h4>No reviews.</h4>
     #end
   </div>
 </div>

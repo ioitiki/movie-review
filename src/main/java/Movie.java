@@ -9,14 +9,15 @@ public class Movie {
   private int directorId;
   private String description;
   private String genre;
-  private Timestamp releaseDate;
+  private String releaseDate;
 
   public Movie(String title, int directorId, String description, String genre, String releaseDate) {
     this.title = title;
     this.directorId = directorId;
     this.description = description;
     this.genre = genre;
-    this.releaseDate = new Timestamp(Date.valueOf(releaseDate).getTime());
+    // this.releaseDate = new Timestamp(Date.valueOf(releaseDate).getTime());
+    this.releaseDate = releaseDate;
 
   }
 
@@ -40,7 +41,7 @@ public class Movie {
     return genre;
   }
 
-  public Timestamp getReleaseDate() {
+  public String getReleaseDate() {
     return releaseDate;
   }
 
@@ -110,8 +111,51 @@ public class Movie {
 
   public static List<Movie> getTopMovies() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM movies AS a ORDER BY (SELECT AVG(rating) FROM reviews WHERE movieId = a.id) asc;";
+      String sql = "SELECT * FROM movies AS a ORDER BY (SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE movieId = a.id) desc;";
       return con.createQuery(sql)
+        .executeAndFetch(Movie.class);
+    }
+  }
+
+  public void updateMovie(String title, int directorId, String description, String genre, String releaseDate) {
+    this.title = title;
+    this.directorId = directorId;
+    this.description = description;
+    this.genre = genre;
+    // this.releaseDate = new Timestamp(Date.valueOf(releaseDate).getTime());
+    this.releaseDate = releaseDate;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE movies SET (title, directorId, description, genre, releaseDate) = (:title, :directorId, :description, :genre, :releaseDate) WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("title", this.title)
+        .addParameter("directorId", this.directorId)
+        .addParameter("description", this.description)
+        .addParameter("genre", this.genre)
+        .addParameter("releaseDate", this.releaseDate)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void deleteMovie() {
+    List<Review> reviews = this.getReviews();
+    for (Review review : reviews) {
+      review.deleteReview();
+    }
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM movies WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public static List<Movie> searchMovie(String input) {
+    String newInput = "%" + input + "%";
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM movies WHERE lower(title) LIKE lower(:input);";
+      return con.createQuery(sql)
+        .addParameter("input", newInput)
         .executeAndFetch(Movie.class);
     }
   }

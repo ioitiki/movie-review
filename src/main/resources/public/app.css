@@ -30,3 +30,14 @@ button {
 .list-item {
   font-size: 18px;
 }
+
+.review-edit {
+  float: right;
+  margin-top: -5px;
+  margin-right: -5px;
+}
+
+.search-btn {
+  margin: 0px;
+  margin-left: 3px;
+}

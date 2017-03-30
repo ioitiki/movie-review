@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <form action="/directors/$movie.getDirectorId()/movies/$movie.getId()/reviews/$review.getId()/edit" method="post">
+      <div class="form-group">
+        <label for="rating">Rate this Movie</label>
+        <br>
+        <select class="selectpicker" name="rating" value="$review.getRating()" required>
+          #foreach($i in [1..10])
+            #if($i == $review.getRating())
+              <option selected data-icon="glyphicon glyphicon-star" value="$i">$i</option>
+            #else
+              <option data-icon="glyphicon glyphicon-star" value="$i">$i</option>
+            #end
+          #end
+        </select>
+      </div>
+
+      <label for="review">Review this Movie</label>
+      <textarea class="form-control" name="review" rows="8" cols="40" required>$review.getReview()</textarea>
+      <button type="submit" class="btn btn-primary">Update Review</button>
+
+    </form>
+    <form action="/directors/$movie.getDirectorId()/movies/$movie.getId()/reviews/$review.getId()/delete" method="post">
+      <button type="submit" class="btn btn-danger">Delete Review</button>
+    </form>
+  </div>
+</div>

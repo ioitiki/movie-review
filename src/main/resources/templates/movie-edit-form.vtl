@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Edit Movie</h2>
+    <div class="well">
+      <form action="/directors/$movie.getDirectorId()/movies/$movie.getId()/edit" method="post">
+        <div class="form-group">
+          <label for="title">Enter Movie Title:</label>
+          <input value="$movie.getTitle()" class="form-control" type="text" name="title" id="title" required>
+        </div>
+        <div class="form-group">
+          <label for="directoId">Select Director:</label>
+          <select class="form-control" name="directorId">
+            #foreach($director in $directors)
+              #if($director.getId() == $movie.getDirectorId())
+                <option selected value="$director.getId()">$director.getName()</option>
+              #else
+                <option value="$director.getId()">$director.getName()</option>
+              #end
+            #end
+          </select>
+        </div>
+        <div class="form-inline">
+          <div class="form-group">
+            <label for="genre">Enter Genre:</label>
+            <input value="$movie.getGenre()" class="form-control" type="text" name="genre" id="genre" required>
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Enter Release Date:</label>
+            <input value="$movie.getReleaseDate()" class="form-control" type="date" name="releaseDate" id="releaseDate" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Enter Description:</label>
+          <textarea class="form-control" name="description" rows="8" cols="40" required>$movie.getDescription()</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Edit Movie</button>
+      </form>
+      <form action="/directors/$movie.getDirectorId()/movies/$movie.getId()/delete" method="post">
+        <button type="submit" class="btn btn-danger">Delete Movie</button>
+      </form>
+    </div>
+  </div>
+</div>

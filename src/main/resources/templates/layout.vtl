@@ -20,8 +20,14 @@
           <li><a href="/admin">Administrator</a></li>
           <li><a href="/directors">Browse Directors</a></li>
           <li><a href="/movies">Browse Movies</a></li>
-          <li><a href="/search">Search</a></li>
+          <!-- <li><a href="/search">Search</a></li> -->
         </ul>
+        <form action="/search" class="navbar-form navbar-left" method="post">
+          <div class="form-group">
+            <input name="searchInput"type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="search-btn btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
       </div>
     </nav>
     <div class="container-fluid">

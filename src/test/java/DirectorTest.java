@@ -122,8 +122,51 @@ public class DirectorTest {
     testReview1.save();
     Review testReview2 = new Review(testMovie2.getId(), 99, "Really Good Movie");
     testReview2.save();
-    assertTrue(Director.getTopDirectors().get(1).equals(testDirector2));
-    assertTrue(Director.getTopDirectors().get(0).equals(testDirector1));
+    assertTrue(Director.getTopDirectors().get(0).equals(testDirector2));
+    assertTrue(Director.getTopDirectors().get(1).equals(testDirector1));
+  }
+
+  @Test
+  public void updateDirector_updatesDirectorProperties_true() {
+    Director testDirector = new Director("Coen Brothers");
+    testDirector.save();
+    testDirector.updateDirector("Wes Anderson");
+    assertEquals("Wes Anderson", Director.find(testDirector.getId()).getName());
+    assertEquals("Wes Anderson", testDirector.getName());
+  }
+
+  @Test
+  public void deleteDirector_deletesDirectorFromDB_true() {
+    Director testDirector = new Director("Coen Brothers");
+    testDirector.save();
+    Movie testMovie = new Movie("Fargo", testDirector.getId(), "Jerry works in his father-in-law's car dealership", "Crime", "1996-04-05");
+    testMovie.save();
+    Review testReview1 = new Review(testMovie.getId(), 89, "Good Movie");
+    testReview1.save();
+    Review testReview2 = new Review(testMovie.getId(), 99, "Really Good Movie");
+    testReview2.save();
+    int testDirectorId = testDirector.getId();
+    int testMovieId = testMovie.getId();
+    int testReview1Id = testReview1.getId();
+    int testReview2Id = testReview2.getId();
+    testDirector.deleteDirector();
+    assertEquals(null, Director.find(testDirectorId));
+    assertEquals(null, Movie.find(testMovieId));
+    assertEquals(null, Review.find(testReview1Id));
+    assertEquals(null, Review.find(testReview2Id));
+  }
+
+  @Test
+  public void searchDirector_returnsAllDirectorsWithMatchingString_List() {
+    Director testDirector1 = new Director("Coen Brothers");
+    testDirector1.save();
+    Director testDirector2 = new Director("Ben Affleck");
+    testDirector2.save();
+    Director testDirector3 = new Director("JJ Abrams");
+    testDirector3.save();
+    Director[] directors = new Director[] {testDirector1, testDirector2};
+    assertTrue(Director.searchDirector("en").containsAll(Arrays.asList(directors)));
+    assertFalse(Director.searchDirector("en").contains(testDirector3));
   }
 
 }

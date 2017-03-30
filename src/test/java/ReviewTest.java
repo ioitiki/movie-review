@@ -86,4 +86,24 @@ public class ReviewTest {
     assertEquals(testMovie.getTitle(), testReview.getMovieTitle());
   }
 
+  @Test
+  public void updateReview_updatesReviewProperties_true() {
+    Review testReview = new Review(1, 89, "Good Movie");
+    testReview.save();
+    testReview.updateReview(99, "Really Good Movie");
+    assertEquals(99, Review.find(testReview.getId()).getRating());
+    assertEquals(99, testReview.getRating());
+    assertEquals("Really Good Movie", Review.find(testReview.getId()).getReview());
+    assertEquals("Really Good Movie", testReview.getReview());
+  }
+
+  @Test
+  public void deleteReview_deletesReviewFromDB_true() {
+    Review testReview = new Review(1, 89, "Good Movie");
+    testReview.save();
+    int testReviewId = testReview.getId();
+    testReview.deleteReview();
+    assertEquals(null, Review.find(testReviewId));
+  }
+
 }

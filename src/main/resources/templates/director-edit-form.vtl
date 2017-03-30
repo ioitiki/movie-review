@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Edit Director</h2>
+    <div class="well">
+      <form action="/directors/$director.getId()/edit" method="post">
+        <label for="name">Edit Director Name:</label>
+        <input value="$director.getName()" class="form-control" type="text" name="name" id="name" required>
+        <button type="submit" class="btn btn-primary">Edit Director</button>
+      </form>
+      <form action="/directors/$director.getId()/delete" method="post">
+        <button type="submit" class="btn btn-danger">Delete Director</button>
+      </form>
+    </div>
+  </div>
+</div>
