@@ -1,39 +1,44 @@
 <!--index.vtl-->
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h2>Top Rated Movies</h2>
-    #if($topMovies.size() > 0)
-      #if($topMovies.size() < 4)
-        #set($end = $topMovies.size())
-        #set($end = $end - 1)
-      #else
-        #set($end = 4)
-      #end
-      <ul>
-      #foreach($i in [0..$end])
-        <li class="list-item"><a href="/directors/$topMovies.get($i).getDirectorId()/movies/$topMovies.get($i).getId()">$topMovies.get($i).getTitle()</a></li>
-      #end
-      </ul>
-    #end
-  </div>
+  <h1 class="logo center-text"><img src="/images/reel-icon.svg" id="banner-logo" />Awesome Movie Review</h1>
 </div>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h2>Top Rated Directors</h2>
-    #if($topDirectors.size() > 0)
-      #if($topDirectors.size() < 4)
-        #set($end = $topDirectors.size())
-        #set($end = $end - 1)
-      #else
-        #set($end = 4)
-      #end
-      <ul>
-        #foreach($i in [0..$end])
-          <li class="list-item"><a href="/directors/$topDirectors.get($i).getId()">$topDirectors.get($i).getName()</a></li>
+  <div class="col-md-4 col-md-offset-2">
+    <div class="table-list well">
+      <h2>Top Rated Movies</h2>
+      #if($topMovies.size() > 0)
+        #if($topMovies.size() < 4)
+          #set($end = $topMovies.size())
+          #set($end = $end - 1)
+        #else
+          #set($end = 4)
         #end
-      </ul>
+        <ul>
+        #foreach($i in [0..$end])
+          <li class="list-item"><a href="/directors/$topMovies.get($i).getDirectorId()/movies/$topMovies.get($i).getId()">$topMovies.get($i).getTitle()</a></li>
+        #end
+        </ul>
+      #end
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="table-list well">
+      <h2>Top Rated Directors</h2>
+      #if($topDirectors.size() > 0)
+        #if($topDirectors.size() < 4)
+          #set($end = $topDirectors.size())
+          #set($end = $end - 1)
+        #else
+          #set($end = 4)
+        #end
+        <ul>
+          #foreach($i in [0..$end])
+            <li class="list-item"><a href="/directors/$topDirectors.get($i).getId()">$topDirectors.get($i).getName()</a></li>
+          #end
+        </ul>
     #end
+    </div>
   </div>
 </div>
 

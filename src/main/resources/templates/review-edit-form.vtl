@@ -14,13 +14,13 @@
           #end
         </select>
       </div>
-
       <label for="review">Review this Movie</label>
       <textarea class="form-control" name="review" rows="8" cols="40" required>$review.getReview()</textarea>
+      <input type="hidden" name="url" value="$url">
       <button type="submit" class="btn btn-primary">Update Review</button>
-
     </form>
     <form action="/directors/$movie.getDirectorId()/movies/$movie.getId()/reviews/$review.getId()/delete" method="post">
+      <input type="hidden" name="url" value="$url">
       <button type="submit" class="btn btn-danger">Delete Review</button>
     </form>
   </div>

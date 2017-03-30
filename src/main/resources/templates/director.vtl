@@ -3,7 +3,7 @@
     #if($admin)
       <a href="/directors/$director.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Director</a>
     #end
-    <h1>$director.getName()</h1>
+    <h1 class="page-title">$director.getName()</h1>
     #if($director.getDirectorRating())
       #set($String = "abc")
       <h4><span class="glyphicon glyphicon-star"></span> $String.format("%.1f", $director.getDirectorRating())/10</h4>
@@ -34,16 +34,19 @@
         #set($end = 4)
       #end
       #foreach($i in [0..$end])
-      <div class="well">
-        <h4>$director.getDirectorReviews().get($i).getMovieTitle()</h4>
-        <p>$director.getDirectorReviews().get($i).getRating()
-          #foreach($i in [1..$director.getDirectorReviews().get($i).getRating()])
-            <span class="glyphicon glyphicon-star"></span>
+        <div class="well">
+          #if($admin)
+            <a href="/directors/$director.getId()/movies/$director.getDirectorReviews().get($i).getMovieId()/reviews/$director.getDirectorReviews().get($i).getId()/edit" class="review-edit btn btn-info btn-xs">Edit</a>
           #end
-        </p>
-        <hr>
-        <p>$director.getDirectorReviews().get($i).getReview()</p>
-      </div>
+          <h4>$director.getDirectorReviews().get($i).getMovieTitle()</h4>
+          <p>$director.getDirectorReviews().get($i).getRating()
+            #foreach($i in [1..$director.getDirectorReviews().get($i).getRating()])
+              <span class="glyphicon glyphicon-star"></span>
+            #end
+          </p>
+          <hr>
+          <p>$director.getDirectorReviews().get($i).getReview()</p>
+        </div>
       #end
     #else
       <h4>No reviews.</h4>

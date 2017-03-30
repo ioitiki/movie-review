@@ -101,6 +101,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       Movie movie = Movie.find(Integer.parseInt(request.params(":movieId")));
       Review review = Review.find(Integer.parseInt(request.params(":reviewId")));
+      model.put("url", request.headers("Referer"));
       model.put("admin", request.session().attribute("admin"));
       model.put("movie", movie);
       model.put("review", review);
@@ -116,8 +117,8 @@ public class App {
       int movieId = Integer.parseInt(request.params(":movieId"));
       Review userReview = Review.find(Integer.parseInt(request.params(":reviewId")));
       userReview.updateReview(rating, review);
-      String url = String.format("/directors/%d/movies/%d", directorId, movieId);
-      response.redirect(url);
+      // String url = String.format("/directors/%d/movies/%d", directorId, movieId);
+      response.redirect(request.queryParams("url"));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -127,8 +128,8 @@ public class App {
       int movieId = Integer.parseInt(request.params(":movieId"));
       Review review = Review.find(Integer.parseInt(request.params(":reviewId")));
       review.deleteReview();
-      String url = String.format("/directors/%d/movies/%d", directorId, movieId);
-      response.redirect(url);
+      // String url = String.format("/directors/%d/movies/%d", directorId, movieId);
+      response.redirect(request.queryParams("url"));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

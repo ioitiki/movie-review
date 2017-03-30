@@ -3,7 +3,7 @@
     #if($admin)
       <a href="/directors/$director.getId()/movies/$movie.getId()/edit" class="review-edit btn btn-info btn-sm">Edit Movie</a>
     #end
-    <h1>$movie.getTitle()</h1>
+    <h1 class="page-title">$movie.getTitle()</h1>
     <h3><a href="/directors/$director.getId()">$director.getName()</a></h3>
   </div>
 </div>
@@ -35,24 +35,25 @@
   </div>
 </div>
 <div class="row">
-  <hr>
   <div class="col-md-8 col-md-offset-2">
-    <h2 class="center-text">Add a Review</h2>
-    <form action="/directors/$director.getId()/movies/$movie.getId()/reviews/new" method="post">
-      <div class="form-group">
-        <label for="rating">Rate this Movie</label>
-        <br>
-        <select class="selectpicker" name="rating" required>
-          #foreach($i in [1..10])
-            <option data-icon="glyphicon glyphicon-star" value="$i">$i</option>
-          #end
-        </select>
-      </div>
+    <div class="well table-list">
+      <h2 class="center-text">Add a Review</h2>
+      <form action="/directors/$director.getId()/movies/$movie.getId()/reviews/new" method="post">
+        <div class="form-group">
+          <label for="rating">Rate this Movie</label>
+          <br>
+          <select class="selectpicker" name="rating" required>
+            #foreach($i in [1..10])
+              <option data-icon="glyphicon glyphicon-star" value="$i">$i</option>
+            #end
+          </select>
+        </div>
 
-      <label for="review">Review this Movie</label>
-      <textarea class="form-control" name="review" rows="8" cols="40" required></textarea>
-      <button type="submit" class="btn btn-primary">Review</button>
-    </form>
+        <label for="review">Review this Movie</label>
+        <textarea class="form-control" name="review" rows="8" cols="40" required></textarea>
+        <button type="submit" class="btn btn-primary">Review</button>
+      </form>
+    </div>
   </div>
 </div>
 <div class="row">
